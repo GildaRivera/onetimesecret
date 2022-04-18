@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
@@ -6,9 +5,9 @@ function App() {
   const [secret, setSecret] = useState();
   const [shortUrl, setShortUrl] = useState("");
   const shortenUrl = useRef();
-  const [count, setCount]= useState(0)
-  const secretValue=useRef()
-  const [clean, setClean]= useState(true)
+  const [count, setCount] = useState(0);
+  const secretValue = useRef();
+  const [clean, setClean] = useState(true);
   const createUrl = async () => {
     if (secret) {
       const rawResponse = await fetch(`http://localhost:8080/api/secret`, {
@@ -17,7 +16,7 @@ function App() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ secret: secret, count:count }),
+        body: JSON.stringify({ secret: secret, count: count }),
       });
       let response = await rawResponse.json();
       setShortUrl(response.url);
@@ -27,25 +26,24 @@ function App() {
     shortenUrl.current.value = shortUrl;
   }, [shortUrl]);
   const handleChange = (e) => {
-    if(e.target.value!==""){
-      setClean(false)
-    }
-    else{
-      setClean(true)
+    if (e.target.value !== "") {
+      setClean(false);
+    } else {
+      setClean(true);
     }
     setSecret(e.target.value);
   };
-  const handleClean = ()=>{
-shortenUrl.current.value=""
-secretValue.current.value=""
-  }
+  const handleClean = () => {
+    shortenUrl.current.value = "";
+    secretValue.current.value = "";
+  };
   return (
     <div>
-      <div className="container" style={{"maxWidth":"70%"}}>
+      <div className="container" style={{ maxWidth: "70%" }}>
         <div
           className="notification is-primary"
           style={{
-            backgroundColor: "#e6820966",
+            backgroundColor: "rgb(23 20 16 / 40%)",
             position: "relative",
             top: "15vh",
           }}
@@ -65,8 +63,18 @@ secretValue.current.value=""
               style={{ width: "90%", borderRadius: "15px" }}
               ref={secretValue}
             />
-      {clean? <></>:      <button className="clear" onClick={handleClean}>k<i className="fa-solid fa-x"></i></button>}
 
+            {clean ? (
+              <></>
+            ) : (
+              <button className="clear" onClick={handleClean}>
+                k<i className="fa-solid fa-x"></i>
+                <label class="checkbox">
+                  <input type="checkbox" />
+                  Remember me
+                </label>
+              </button>
+            )}
           </div>
           <div
             style={{
@@ -79,15 +87,14 @@ secretValue.current.value=""
             <button
               className="button is-primary is-light"
               style={{
-                backgroundColor: "#ffe08a",
+                backgroundColor: "rgb(28 1 36)",
                 borderColor: "transparent",
-                color: "rgba(0,0,0,.7)",
+                color: "white",
               }}
               onClick={createUrl}
             >
-             Generate secret
+              Generate secret
             </button>
-            
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <input
